@@ -1,4 +1,4 @@
 .idea/
 db.sqlite3
-settings.cpython-35.pyc
-urls.cpython-35.pyc
+my_django_project/__pycache__/settings.cpython-35.pyc
+my_django_project/__pycache__/urls.cpython-35.pyc

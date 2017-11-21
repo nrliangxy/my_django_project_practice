@@ -5,12 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-{#    <form action="{% url 'indexx' 2 %}" method="POST">#}
-        <form action="{{ request.path_info }}" method="POST">
-        <p><input type="text" name="user" placeholder="用户名"/></p>
-        <p><input type="text" name="email" placeholder="邮箱"/></p>
-        <p><input type="submit" value="提交"/></p>
-    </form>
+<form action="{% url 'indexx' nid=2 uid=3 %}" method="POST">
+    {#        <form action="{{ request.path_info }}" method="POST">#}
+    <p><input type="text" name="user" placeholder="用户名"/></p>
+    <p><input type="text" name="email" placeholder="邮箱"/></p>
+    <p><input type="submit" value="提交"/></p>
+</form>
 {#{{ user_dict.k1 }}#}
 {#<u1>#}
 {#    {% for row,k in user_dict.items %}#}

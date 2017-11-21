@@ -13,15 +13,25 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
-from cmdb import views
+# from cmdb import views
+
+"""
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # url(r'^h.html', views.home),
     url(r'^login', views.login),
     url(r'^home', views.Home.as_view()),
-    url(r'^indexfffg/(\d+)/(\d+)/', views.index, name='indexx'),
+    url(r'^indexfffg/(?P<nid>\d+)/(?P<uid>\d+)/', views.index, name='indexx'),
     url(r'^detail-(?P<nid>\d+)-(?P<uid>\d+).html', views.detail) #def detail(request, *args, **kwargs)
+]
+"""
+# from ipdb import set_trace
+# set_trace()
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^cmdb/', include("cmdb.urls")),
+    url(r'^monitor/', include("monitor.urls"))
 ]
