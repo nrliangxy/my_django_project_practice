@@ -7,4 +7,4 @@ class UserInfo(models.Model):
     #用户名列，字符串类型，指定长度
     username = models.CharField(max_length=32)
     password = models.CharField(max_length=64)
-    gender = models.CharField(max_length=5)
+    # gender = models.CharField(max_length=5)

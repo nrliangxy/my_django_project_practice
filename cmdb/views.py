@@ -5,6 +5,31 @@ from django.shortcuts import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 import os
+from cmdb import models
+
+
+def orm(request):
+    # 增加创建方法1
+    # models.UserInfo.objects.create(
+    #     username='root',
+    #     password='321'
+    # )
+    # 增加创建方法2
+    # obj = models.UserInfo(username='xiaoyong', password='991')
+    # obj.save()
+    # 增加创建方法3
+    # dic = {'username':'nr', 'password':'999'}
+    # models.UserInfo.objects.create(**dic)
+    # result = models.UserInfo.objects.all()
+    # result = models.UserInfo.objects.filter(username='xiaoyong', password='991')
+    # for row in result:
+    #     print(row.id, row.username, row.password)
+    # print(result)
+    # return HttpResponse('ok')
+    # 删除
+    # models.UserInfo.objects.filter(id=4).delete()
+    models.UserInfo.objects.filter(id=2).update(password=66699)
+    return HttpResponse('ok')
 
 
 class Home(View):
@@ -13,11 +38,11 @@ class Home(View):
         result = super(Home, self).dispatch(request, *args, **kwargs)
         print('after')
         return result
-    
+
     def get(self, request):
         print(request.method)
         return render(request, 'home.html')
-    
+
     def post(self, request):
         print(request.method)
         return render(request, 'home.html')
@@ -33,8 +58,8 @@ def login(request):
     # request 包含了用户提交的所有信息
     # 获取用户提交方法
     # print(request.method)
-    v = request.POST.get('wj')
-    print(v)
+    # v = request.POST.get('wj')
+    # print(v)
     # obj = request.FILES.get('wj')  # FILES只取上传文件
     # print(obj, type(obj), obj.name)
     # file_path = os.path.join('upload', obj.name)
@@ -46,13 +71,19 @@ def login(request):
     # print(request.POST.getlist('city'))
     if request.method == "POST":
         # 获取用户通过post提交过来的数据
-        
+
         user = request.POST.get('user', None)
         pwd = request.POST.get('pwd', None)
         print(user, pwd)
-        if user == 'root' and pwd == '123':
+        # obj = models.UserInfo.objects.filter(username=user, password=pwd)
+        # for i in obj:
+        #     print(i.username)
+        obj = models.UserInfo.objects.filter(username=user, password=pwd).first()
+        # count = models.UserInfo.objects.filter(username=user, password=pwd).count()
+        print(obj.username)
+        if obj:
             # 去跳转到
-            return redirect('/home')
+            return redirect('/cmdb/index1/')
         else:
             # 用户名密码不匹配
             error_msg = "用户名或密码错误"
@@ -83,13 +114,28 @@ USER_DICT = {
 }
 
 
+def index1(request):
+    return render(request, 'index1.html')
+
+
+def user_info(request):
+    user_list = models.UserInfo.objects.all()
+    # print(user_list.query)
+    return render(request, 'user_info.html', {'user_list': user_list})
+def userdetail(request, nid):
+    obj = models.UserInfo.objects.filter(id=nid).first()
+    #取单条数据，如何不存在，直接报错
+    # obj = models.UserInfo.objects.get(id=nid)
+    return render(request, 'user_detail.html', {'obj': obj})
+
+
 def index(requset, uid, nid):
     print(requset.path_info)
     from django.urls import reverse
     # from ipdb import set_trace
     # set_trace()
     # v = reverse('indexx', args=(1, 3,))
-    v = reverse('indexx', kwargs={"nid":1, "uid":99})
+    v = reverse('indexx', kwargs={"nid": 1, "uid": 99})
     print(v)
     return render(requset, 'index.html', {'user_dict': USER_DICT})
 

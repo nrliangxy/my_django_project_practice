@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-<form action="/cmdb/login" method="post" enctype="multipart/form-data">
+<form action="/login" method="post" enctype="multipart/form-data">
     <p>
         <label for="username">用户名：</label>
         <input id="username" name="user" type="text"/>
@@ -22,6 +22,24 @@
         <label for="password">密码：</label>
         <input id="password" name="pwd" type="password"/>
         <span style="color: red;">{{ error_msg }}</span>
+    </p>
+    <p>
+        男:<input type="radio" name="gender" value="1"/>
+        女:<input type="radio" name="gender" value="2"/>
+    </p>
+    <p>
+        电脑:<input type="checkbox" name="favor" value="11"/>
+        工程:<input type="checkbox" name="favor" value="22"/>
+    </p>
+    <p>
+        <select name="city" multiple>
+            <option value="sh">上海</option>
+            <option value="bj">北京</option>
+            <option value="hz">杭州</option>
+        </select>
+    </p>
+    <p>
+        <input type="file" name="wj">
     </p>
     <p>
         <input type="submit" value="提交"/>

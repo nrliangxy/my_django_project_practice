@@ -21,8 +21,12 @@ from cmdb import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # url(r'^h.html', views.home),
-    # url(r'^login', views.login),
+    url(r'^login', views.login),
+    url(r'^index1', views.index1),
+    url(r'^user_info', views.user_info),
+    url(r'^userdetail-(?P<nid>\d+)', views.userdetail),
+    url(r'^orm', views.orm),
     # url(r'^home', views.Home.as_view()),
-    # url(r'^indexfffg/(?P<nid>\d+)/(?P<uid>\d+)/', views.index, name='indexx'),
+    url(r'^indexfffg/(?P<nid>\d+)/(?P<uid>\d+)/', views.index, name='indexx'),
     # url(r'^detail-(?P<nid>\d+)-(?P<uid>\d+).html', views.detail)  # def detail(request, *args, **kwargs)
 ]
