@@ -35,13 +35,13 @@ def login(request):
     # print(request.method)
     v = request.POST.get('wj')
     print(v)
-    obj = request.FILES.get('wj')  # FILES只取上传文件
-    print(obj, type(obj), obj.name)
-    file_path = os.path.join('upload', obj.name)
-    for i in obj.chunks():
-        with open(file_path, 'wb') as f_read:
-            f_read.write(i)
-        print(i)
+    # obj = request.FILES.get('wj')  # FILES只取上传文件
+    # print(obj, type(obj), obj.name)
+    # file_path = os.path.join('upload', obj.name)
+    # for i in obj.chunks():
+    #     with open(file_path, 'wb') as f_read:
+    #         f_read.write(i)
+    #     print(i)
     error_msg = ""
     # print(request.POST.getlist('city'))
     if request.method == "POST":
@@ -83,12 +83,13 @@ USER_DICT = {
 }
 
 
-def index(requset, nid, uid):
+def index(requset, uid, nid):
     print(requset.path_info)
     from django.urls import reverse
     # from ipdb import set_trace
     # set_trace()
-    v = reverse('indexx', args=(1,3,))
+    # v = reverse('indexx', args=(1, 3,))
+    v = reverse('indexx', kwargs={"nid":1, "uid":99})
     print(v)
     return render(requset, 'index.html', {'user_dict': USER_DICT})
 
