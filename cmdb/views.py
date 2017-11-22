@@ -11,8 +11,8 @@ from cmdb import models
 def orm(request):
     # 增加创建方法1
     # models.UserInfo.objects.create(
-    #     username='root',
-    #     password='321'
+    #     username='nrliangxy',
+    #     password='123'
     # )
     # 增加创建方法2
     # obj = models.UserInfo(username='xiaoyong', password='991')
@@ -28,7 +28,22 @@ def orm(request):
     # return HttpResponse('ok')
     # 删除
     # models.UserInfo.objects.filter(id=4).delete()
-    models.UserInfo.objects.filter(id=2).update(password=66699)
+    # models.UserGroup.objects.create(title="a little goal now")
+    # models.UserGroup.objects.filter(uid=4).update(title='build a website')
+    # obj = models.UserGroup.objects.filter(uid=4).first()
+    # obj.title = 'crawl the data'
+    # obj.save()
+    # obj = models.UserInfo.objects.all().first()
+    # print(obj.user_group.uid)
+    models.UserInfo.objects.create(
+        username='snow',
+        password='125fdggg6fdfdgghhh',
+        gender='male',
+        email='fdgd@qq.com',
+        url='http:www.fdgdg.com',
+        ip='425.365',
+        user_group_id='1'
+    )
     return HttpResponse('ok')
 
 
@@ -38,11 +53,11 @@ class Home(View):
         result = super(Home, self).dispatch(request, *args, **kwargs)
         print('after')
         return result
-
+    
     def get(self, request):
         print(request.method)
         return render(request, 'home.html')
-
+    
     def post(self, request):
         print(request.method)
         return render(request, 'home.html')
@@ -71,7 +86,7 @@ def login(request):
     # print(request.POST.getlist('city'))
     if request.method == "POST":
         # 获取用户通过post提交过来的数据
-
+        
         user = request.POST.get('user', None)
         pwd = request.POST.get('pwd', None)
         print(user, pwd)
@@ -120,11 +135,18 @@ def index1(request):
 
 def user_info(request):
     user_list = models.UserInfo.objects.all()
+    # for row in user_list:
+    #     print(row.id)
+    #     print(row.user_group.uid)
+    #     print(row.user_group.title)
     # print(user_list.query)
-    return render(request, 'user_info.html', {'user_list': user_list})
+    group_list = models.UserGroup.objects.all()
+    return render(request, 'user_info.html', {'user_list': user_list, 'group_list': group_list})
+
+
 def userdetail(request, nid):
     obj = models.UserInfo.objects.filter(id=nid).first()
-    #取单条数据，如何不存在，直接报错
+    # 取单条数据，如何不存在，直接报错
     # obj = models.UserInfo.objects.get(id=nid)
     return render(request, 'user_detail.html', {'obj': obj})
 
