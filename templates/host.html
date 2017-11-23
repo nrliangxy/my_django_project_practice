@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .hide{
+            display: none;
+        }
+        .shade {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background: black;
+            opacity: 0.6;
+            z-index: 100;
+        }
+        .add-model{
+            position: fixed;
+            height: 300px;
+            width: 400px;
+            top: 100px;
+            left: 50%;
+            z-index: 101;
+            border: red;
+            background: white;
+            margin-left: -200px;
+        }
+    </style>
+</head>
+<body>
+<h1>主机列表</h1>
+<div>
+    <input id="add_elementhost" type="button" value="添加">
+</div>
+<table border="1">
+    <thead>
+    <tr>
+        {#        <th>主机ID</th>#}
+        <th>序号</th>
+        <th>主机名</th>
+        <th>IP</th>
+        <th>端口</th>
+        {#        <th>业务线ID</th>#}
+        <th>业务线名称</th>
+        <th>业务线编码</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in v1 %}
+        <tr host-id="{{ row.nid }}" b_id="{{ row.b_id }}">
+            {#            <td>{{ row.nid }}</td>#}
+            <td>{{ forloop.counter }}</td>
+            <td>{{ row.hostname }}</td>
+            <td>{{ row.ip }}</td>
+            <td>{{ row.port }}</td>
+            {#            <td>{{ row.b_id }}</td>#}
+            <td>{{ row.b.caption }}</td>
+            <td>{{ row.b.english_name }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="shade hide"></div>
+<div class="add-model hide">
+    <form method="POST" action="/host">
+        <div class="group">
+            <input type="text" placeholder="主机名" name="hostname"/>
+        </div>
+        <div class="group">
+            <input type="text" placeholder="IP" name="ip"/>
+        </div>
+        <div class="group">
+            <input type="text" placeholder="端口" name="port"/>
+        </div>
+        <div class="group">
+            <select name="b_id">
+                {% for op in op_list %}
+                    <option value="{{ op.id }}">{{ op.caption }}</option>
+                {% endfor %}
+{#                <option>业务线——</option>#}
+{#                <option>业务线——</option>#}
+{#                <option>业务线——</option>#}
+{#                <option>业务线——</option>#}
+            </select>
+        </div>
+        <input type="submit" value="提交">
+        <input id="cancel" type="button" value="取消">
+    </form>
+</div>
+<script src="/static/jquery.min.js"></script>
+<script>
+    $(function () {
+        $('#add_elementhost').click(function () {
+            $('.shade, .add-model').removeClass('hide');
+
+        })
+        $('#cancel').click(function () {
+            $('.shade, .add-model').addClass('hide');
+        })
+    })
+</script>
+</body>
+</html>

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-# from cmdb import views
+from monitor import views
 
 """
 
@@ -33,5 +33,6 @@ urlpatterns = [
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^cmdb/', include("cmdb.urls")),
+    url(r'^host$', views.host),
     url(r'^monitor/', include("monitor.urls"))
 ]
