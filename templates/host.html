@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>主机管理</title>
     <style>
-        .hide{
+        .hide {
             display: none;
         }
+
         .shade {
             position: fixed;
             top: 0;
@@ -17,7 +18,8 @@
             opacity: 0.6;
             z-index: 100;
         }
-        .add-model{
+
+        .add-model, .edit-model{
             position: fixed;
             height: 300px;
             width: 400px;
@@ -46,6 +48,7 @@
         {#        <th>业务线ID</th>#}
         <th>业务线名称</th>
         <th>业务线编码</th>
+        <th>操作</th>
     </tr>
     </thead>
     <tbody>
@@ -59,6 +62,9 @@
             {#            <td>{{ row.b_id }}</td>#}
             <td>{{ row.b.caption }}</td>
             <td>{{ row.b.english_name }}</td>
+            <td>
+                <a class="edit">编辑</a>|<a class="delete">删除</a>
+            </td>
         </tr>
     {% endfor %}
     </tbody>
@@ -67,27 +73,57 @@
 <div class="add-model hide">
     <form method="POST" action="/host">
         <div class="group">
-            <input type="text" placeholder="主机名" name="hostname"/>
+            <input id="host" type="text" placeholder="主机名" name="hostname"/>
         </div>
         <div class="group">
-            <input type="text" placeholder="IP" name="ip"/>
+            <input id="ip" type="text" placeholder="IP" name="ip"/>
         </div>
         <div class="group">
-            <input type="text" placeholder="端口" name="port"/>
+            <input id="port" type="text" placeholder="端口" name="port"/>
         </div>
         <div class="group">
-            <select name="b_id">
+            <select id="sel" name="b_id">
                 {% for op in op_list %}
                     <option value="{{ op.id }}">{{ op.caption }}</option>
                 {% endfor %}
-{#                <option>业务线——</option>#}
-{#                <option>业务线——</option>#}
-{#                <option>业务线——</option>#}
-{#                <option>业务线——</option>#}
+                {#                <option>业务线——</option>#}
+                {#                <option>业务线——</option>#}
+                {#                <option>业务线——</option>#}
+                {#                <option>业务线——</option>#}
             </select>
         </div>
         <input type="submit" value="提交">
+        <a id="ajax_submit" style="display: inline-block; padding: 5px; background: blue; color: white">悄悄提交</a>
         <input id="cancel" type="button" value="取消">
+        <span id="error_msg"></span>
+    </form>
+</div>
+<div class="edit-model hide">
+    <form method="POST" action="/host">
+        <div class="group">
+            <input id="host" type="text" placeholder="主机名" name="hostname"/>
+        </div>
+        <div class="group">
+            <input id="ip" type="text" placeholder="IP" name="ip"/>
+        </div>
+        <div class="group">
+            <input id="port" type="text" placeholder="端口" name="port"/>
+        </div>
+        <div class="group">
+            <select id="sel" name="b_id">
+                {% for op in op_list %}
+                    <option value="{{ op.id }}">{{ op.caption }}</option>
+                {% endfor %}
+                {#                <option>业务线——</option>#}
+                {#                <option>业务线——</option>#}
+                {#                <option>业务线——</option>#}
+                {#                <option>业务线——</option>#}
+            </select>
+        </div>
+        <input type="submit" value="提交">
+        <a id="ajax_submit" style="display: inline-block; padding: 5px; background: blue; color: white">悄悄提交</a>
+        <input id="cancel" type="button" value="取消">
+        <span id="error_msg"></span>
     </form>
 </div>
 <script src="/static/jquery.min.js"></script>
@@ -96,9 +132,37 @@
         $('#add_elementhost').click(function () {
             $('.shade, .add-model').removeClass('hide');
 
-        })
+        });
         $('#cancel').click(function () {
             $('.shade, .add-model').addClass('hide');
+        });
+        $('#ajax_submit').click(function () {
+            $.ajax({
+                url: "/test_ajax",
+                type: 'POST',
+                data: {
+                    'hostname': $('#host').val(),
+                    'ip': $('#ip').val(),
+                    'port': $('#port').val(),
+                    'b_id': $('#sel').val()
+                },
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    if (obj.status) {
+                        location.reload();
+                    } else {
+                        $('#error_msg').text(obj.error);
+                    }
+                    console.log(data);
+                    {#                    if (data == "ok") {#}
+                    {#                        location.reload()#}
+                    {#                    }else {#}
+                    {#                        alert(data);#}
+                }
+            })
+        });
+        $('.edit').click(function () {
+            $('.shade, .edit-model').removeClass('hide');
         })
     })
 </script>

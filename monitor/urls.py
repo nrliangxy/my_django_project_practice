@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^orm', views.orm),
     url(r'^business$', views.business),
     url(r'^host$', views.host),
+    url(r'^app$', views.app),
     # url(r'^home', views.Home.as_view()),
     # url(r'^indexfffg/(?P<nid>\d+)/(?P<uid>\d+)/', views.index, name='indexx'),
     # url(r'^detail-(?P<nid>\d+)-(?P<uid>\d+).html', views.detail)  # def detail(request, *args, **kwargs)

@@ -34,5 +34,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^cmdb/', include("cmdb.urls")),
     url(r'^host$', views.host),
+    url(r'^test_ajax$', views.test_ajax),
+    url(r'^ajax_add_app$', views.ajax_add_app),
+    url(r'^app$', views.app),
     url(r'^monitor/', include("monitor.urls"))
 ]

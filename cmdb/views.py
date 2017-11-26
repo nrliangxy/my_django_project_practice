@@ -169,6 +169,7 @@ def detail(request, nid, uid):
     detail_info = USER_DICT[nid]
     return render(request, 'detail.html', {'detail_info': detail_info})
 
+
 # for index in range(20):
 #     temp = {'username': 'process' + str(index), 'email': 'fdg@fd.com', 'gender': 'male'}
 #     USER_LIST.append(temp)

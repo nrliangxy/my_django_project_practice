@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .host_tag{
+            display: inline-block;
+            padding: 3px;
+            border: 1px solid red;
+            background: #980503;
+        }
+    </style>
+</head>
+<body>
+<h1>应用列表</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <td>应用名称</td>
+        <td>应用主机列表</td>
+    </tr>
+    </thead>
+    <tbody>
+        {% for row in app_list %}
+            <tr>
+                <td>{{ row.name }}</td>
+                <td>
+                    {% for host in row.r.all %}
+                        <span class="host_tag">{{ host.hostname }}</span>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>
